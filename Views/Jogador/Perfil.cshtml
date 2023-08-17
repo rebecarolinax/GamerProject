@@ -1,0 +1,87 @@
+@model Jogador
+
+@{
+    ViewData["Title"] = "Perfil";
+}
+
+<link rel="stylesheet" href="~/css/perfil.css">
+
+<section class="banner-p">
+
+    <article class="jogadores-flex container-grid-d">
+
+        <div class="border-gradient-p">
+            <article class="box-jogadores">
+                
+                <div class="profile-info">
+                    <img src="~/images/profile.jpg" alt="" id="profile-pic-big">
+                    <h1>@ViewBag.Login</h1>
+                </div>
+
+                <div class="profile-data">
+                    <label for="">Email</label>
+                    <div class="input-gradient-jogadores">
+                        <input type="email" placeholder="@ViewBag.Jogador.Email" name="Email" disabled>
+                    </div>
+                    <label for="">Senha</label>
+                    <div class="input-gradient-jogadores">
+                        <input type="password" value="@ViewBag.Jogador.Senha" name="Email" disabled>
+                    </div>
+
+
+                    <div class="links-profile">
+                    <a asp-area="" asp-controller="Jogador" asp-action="Editar"
+                                    asp-route-id="@ViewBag.Jogador.IdJogador" style="text-decoration: none;">Editar</a>
+                    
+                    <a asp-area="" asp-controller="Jogador" asp-action="Excluir"
+                                    asp-route-id="@ViewBag.Jogador.IdJogador" style="text-decoration: none;">Excluir</a>
+                    </div>
+                </div>
+
+                <div class="profile-team">
+                    <h1>Equipe Atual</h1>
+                    <div class="team-info">
+                    @foreach (Equipe equipe in ViewBag.Equipe)
+                    {
+                        if (ViewBag.Jogador.IdEquipe == equipe.IdEquipe)
+                        {
+                            <span id="team-name">@equipe.Nome</span>
+                            <span><img src="/img/Equipes/@equipe.Imagem" width="50px" alt=""></span>
+                        }
+                    }
+                    </div>
+                            <table>
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            
+                        </tr>
+
+                    </thead>
+                        <tbody>
+                    @foreach (Jogador jogador in ViewBag.Jogadores)
+                    {
+                        if (jogador.IdEquipe == ViewBag.Jogador.IdEquipe)
+                        {
+                            <tr  class="table-line">
+                            <td class="number">@jogador.IdJogador</td>
+                            <td>@jogador.Nome</td>
+
+                            </tr>
+                        }
+                    }
+                    
+                            </tbody>
+                            </table>
+                </div>
+
+            </article>
+        </div> 
+
+        
+    </article>
+
+
+</section>
