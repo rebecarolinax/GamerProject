@@ -1,0 +1,146 @@
+@model Jogador
+
+@{
+    ViewData["Title"] = "Jogador";
+
+}
+
+<link rel="stylesheet" href="~/css/jogadores.css">
+
+@if (ViewBag.Login == null)
+{
+
+    <section class="banner">
+
+        <article class="container-grid equipes-flex container-grid-d">
+
+            <div class="border-gradient-e">
+
+                <form method="post" action="@Url.Action("Cadastrar")" enctype="multipart/form-data" class="box-equipes">
+
+                    <h1>Acesso Negado</h1>
+
+                    <h1>Por favor, realize o login para ter acesso a essa página.</h1>
+
+                </form>
+
+            </div>
+        </article>
+
+    </section>
+
+}
+else
+{
+    <section class="banner">
+
+        <article class="container-grid">
+
+            <div class="hidden">
+
+            @foreach (Equipe equipe in ViewBag.Equipe)
+            {
+                <span>@equipe.Nome</span>
+                <span><img src="/img/Equipes/@equipe.Imagem" width="50px" alt=""></span>
+                <table>
+
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (Jogador jogador in ViewBag.Jogador)
+                    {
+                        if (equipe.IdEquipe == jogador.IdEquipe)
+
+                        {
+                            <tr class="table-line">
+                                <td class="number">@jogador.IdJogador</td>
+                                <td>@jogador.Nome</td>
+                                <td>@jogador.Email</td>
+
+                        @if (jogador.Email == ViewBag.Email)
+                        {
+
+        <td class="icon-trash"><a asp-area="" asp-controller="Jogador" asp-action="Excluir"
+        asp-route-id="@jogador.IdJogador" style="text-decoration: none;"><img
+        src="~/assets/icons/icon-trash.svg" alt=""></a></td>
+
+        <td><a asp-area="" asp-controller="Jogador" asp-action="Editar"
+        asp-route-id="@jogador.IdJogador" style="text-decoration: none;">✏️</a></td>
+        }
+        else{
+
+        }
+
+        </tr>
+        }
+
+                        }
+
+                </tbody>
+                </table>
+                    }
+
+                </div>
+
+            }
+
+            @* <table>
+        <thead>
+
+        <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Equipe</th>
+        <th></th>
+        <th>Ações</th>
+        <th></th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        @foreach (Jogador jogador in ViewBag.Jogador)
+        {
+        <tr class="table-line">
+        <td class="number">@jogador.IdJogador</td>
+        <td>@jogador.Nome</td>
+        <td>@jogador.Email</td>
+
+        <td> <img src="/img/Equipes/@jogador.Equipe.Imagem" width="50px" alt=""></td>
+
+        @if (jogador.Email == ViewBag.Email)
+        {
+
+        <td class="icon-trash"><a asp-area="" asp-controller="Jogador" asp-action="Excluir"
+        asp-route-id="@jogador.IdJogador" style="text-decoration: none;"><img
+        src="~/assets/icons/icon-trash.svg" alt=""></a></td>
+
+        <td><a asp-area="" asp-controller="Jogador" asp-action="Editar"
+        asp-route-id="@jogador.IdJogador" style="text-decoration: none;">✏️</a></td>
+        }
+        else{
+
+        }
+
+        </tr>
+        }
+
+
+        </tbody>
+
+        </table> *@
+        </article>
+
+    </section>
+}
